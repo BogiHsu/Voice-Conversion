@@ -3,10 +3,9 @@ ref: https://ricardodeazambuja.com/deep_learning/2019/03/09/audio_and_video_goog
 """
 import io
 import ffmpeg
+import librosa
 import numpy as np
 from base64 import b64decode
-from librosa import resample
-from scipy.io.wavfile import read
 from IPython.display import HTML, Audio
 from google.colab.output import eval_js
 
