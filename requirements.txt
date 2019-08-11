@@ -6,3 +6,4 @@ librosa
 argparse
 matplotlib
 tensorboardX
+ffmpeg-python
