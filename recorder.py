@@ -116,4 +116,5 @@ def get_audio():
 	audio = audio/max(abs(audio))
 	audio = librosa.resample(audio, sr, 16000)
 	audio, _ = librosa.effects.trim(audio)
+	audio = (32767*audio).astype(np.int16)
 	return audio
