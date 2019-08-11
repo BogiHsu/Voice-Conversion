@@ -1,12 +1,13 @@
+import os
+import sys
+import h5py
 import torch
-from torch.autograd import Variable
 import numpy as np
 from utils import Hps
 from solver import Solver
-from preprocess.tacotron.norm_utils import spectrogram2wav
-import h5py 
-import os 
 from scipy.io import wavfile
+from torch.autograd import Variable
+from preprocess.tacotron.norm_utils import spectrogram2wav
 
 def sp2wav(sp): 
 	exp_sp = sp
@@ -56,6 +57,10 @@ if __name__ == '__main__':
 	hps_path = './hps/vctk.json'
 	solver = get_model(hps_path = hps_path, model_path = model_path)
 	speakers = ['225', '226', '227', '228', '229']
+	max_n = 5
+	if len(sys.argv) == 3:
+		speakers = speakers[:min(5, sys.argv[1])]
+		max_n = min(5, sys.argv[2])
 	for speaker_A in speakers:
 		for speaker_B in speakers:
 			if speaker_A != speaker_B:
