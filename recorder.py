@@ -113,5 +113,5 @@ def get_audio():
 	# Replace bytes 4:8 in proc.stdout with the actual size of the RIFF chunk.
 	riff = output[:4] + bytes(b) + output[8:]
 	sr, audio = read(io.BytesIO(riff))
-	audio = resample(y, sr, 16000)
+	audio = resample(audio, sr, 16000)
 	return audio
