@@ -112,6 +112,6 @@ def get_audio():
 
 	# Replace bytes 4:8 in proc.stdout with the actual size of the RIFF chunk.
 	riff = output[:4] + bytes(b) + output[8:]
-	sr, audio = read(io.BytesIO(riff))
-	audio = resample(audio, sr, 16000)
-	return audio
+	audio, sr = librosa.load(io.BytesIO(riff), sr = 16000)
+	audio, _ = librosa.effects.trim(audio)
+	return audio, sr
