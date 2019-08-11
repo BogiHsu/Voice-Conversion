@@ -59,8 +59,8 @@ if __name__ == '__main__':
 	speakers = ['225', '226', '227', '228', '229']
 	max_n = 5
 	if len(sys.argv) == 3:
-		speakers = speakers[:min(5, sys.argv[1])]
-		max_n = min(5, sys.argv[2])
+		speakers = speakers[:min(5, int(sys.argv[1]))]
+		max_n = min(5, int(sys.argv[2]))
 	for speaker_A in speakers:
 		for speaker_B in speakers:
 			if speaker_A != speaker_B:
