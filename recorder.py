@@ -5,6 +5,7 @@ import io
 import ffmpeg
 import numpy as np
 from base64 import b64decode
+from librosa import resample
 from scipy.io.wavfile import read
 from IPython.display import HTML, Audio
 from google.colab.output import eval_js
@@ -112,5 +113,5 @@ def get_audio():
 	# Replace bytes 4:8 in proc.stdout with the actual size of the RIFF chunk.
 	riff = output[:4] + bytes(b) + output[8:]
 	sr, audio = read(io.BytesIO(riff))
-
-	return audio, sr
+	audio = resample(y, sr, 16000)
+	return audio
