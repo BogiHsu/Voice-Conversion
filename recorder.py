@@ -6,6 +6,7 @@ import ffmpeg
 import librosa
 import numpy as np
 from base64 import b64decode
+from scipy.io.wavfile import read
 from IPython.display import HTML, Audio
 from google.colab.output import eval_js
 
@@ -111,6 +112,7 @@ def get_audio():
 
 	# Replace bytes 4:8 in proc.stdout with the actual size of the RIFF chunk.
 	riff = output[:4] + bytes(b) + output[8:]
-	audio, sr = librosa.load(io.BytesIO(riff), sr = 16000)
+	sr, audio = read(io.BytesIO(riff))
+	audio = librosa.resample(audio, sr, 16000)
 	audio, _ = librosa.effects.trim(audio)
-	return audio, sr
+	return audio
