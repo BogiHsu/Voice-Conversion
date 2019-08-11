@@ -52,7 +52,7 @@ def convert_all_sp(h5_path, src_speaker, tar_speaker, solver, dir_path,
 
 if __name__ == '__main__':
 	h5_path = './vctk_test.h5'
-	root_dir = './result'
+	root_dir = './results'
 	model_path = './pkl/model.pkl'
 	hps_path = './hps/vctk.json'
 	solver = get_model(hps_path = hps_path, model_path = model_path)
