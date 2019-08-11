@@ -1,0 +1,8 @@
+h5py
+scipy
+numpy
+torch
+librosa
+argparse
+matplotlib
+tensorboardX
