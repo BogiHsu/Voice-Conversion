@@ -68,4 +68,4 @@ if __name__ == '__main__':
 				if not os.path.exists(dir_path):
 					os.makedirs(dir_path)
 				convert_all_sp(h5_path, speaker_A, speaker_B,
-								solver, dir_path)
+								solver, dir_path, max_n = max_n)
