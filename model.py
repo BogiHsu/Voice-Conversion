@@ -48,7 +48,7 @@ def pixel_shuffle_1d(inp, upscale_factor=2):
     return shuffle_out
 
 def upsample(x, scale_factor=2):
-    x_up = F.upsample(x, scale_factor=2, mode='nearest')
+    x_up = F.interpolate(x, scale_factor=2, mode='nearest')
     return x_up
 
 def GLU(inp, layer, res=True):

@@ -8,6 +8,7 @@ from collections import defaultdict
 from tacotron.norm_utils import get_spectrograms 
 
 root_dir='./data/wav48'
+speaker_used_list=np.loadtxt('hps/en_speaker_used.txt')
 train_split=0.9
 
 def read_speaker_info(path='./data/speaker-info.txt'):
@@ -38,6 +39,8 @@ if __name__ == '__main__':
 			filename_groups[speaker_id].append(filename)
 		for speaker_id, filenames in filename_groups.items():
 			if speaker_id not in accent2speaker['English']:
+				continue
+			if int(speaker_id) not in speaker_used_list:
 				continue
 			print('processing {}'.format(speaker_id))
 			train_size = int(len(filenames) * train_split)

@@ -147,6 +147,10 @@ class Solver(object):
         return loss
 
     def train(self, model_path, flag='train', mode='train'):
+        if not os.path.isdir(model_path):
+            os.makedirs(model_path)
+            os.chmod(model_path, 0o755)
+        model_path = os.path.join(model_path, 'model.pkl')
         # load hyperparams
         hps = self.hps
         if mode == 'pretrain_G':

@@ -1,5 +1,5 @@
-import sys
-sys.path.append('../')
+import os, sys
+sys.path.append(os.getcwd())
 from utils import Sampler
 import h5py
 import numpy as np
