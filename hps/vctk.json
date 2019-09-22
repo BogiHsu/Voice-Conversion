@@ -15,7 +15,7 @@
     "emb_size": 512,
     "n_speakers": 20,
     "n_latent_steps": 5,
-    "n_patch_steps": 0,
+    "n_patch_steps": 1,
     "batch_size": 32,
     "lat_sched_iters": 50000,
     "enc_pretrain_iters": 8000,
