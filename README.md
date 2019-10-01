@@ -1,4 +1,4 @@
-# 2019-AI-Summer-School-Voice-Conversion
+# Voice-Conversion-PyTorch
 
 ## Preprocess
 ```bash
