@@ -16,6 +16,7 @@ matplotlib.use('pdf')
 import matplotlib.pyplot as plt
 from scipy import signal
 import os
+from tacotron.audio import load_wav, spectrogram, melspectrogram, inv_spectrogram
 
 class hyperparams(object):
     def __init__(self):
@@ -23,7 +24,7 @@ class hyperparams(object):
 
         # signal processing
         self.sr = 16000 # Sample rate.
-        self.n_fft = 1024 # fft points (samples)
+        self.n_fft = 2048 # fft points (samples)
         self.frame_shift = 0.0125 # seconds
         self.frame_length = 0.05 # seconds
         self.hop_length = int(self.sr*self.frame_shift) # samples.
@@ -61,7 +62,7 @@ def get_spectrograms(fpath):
     #     cmd = "ffmpeg -i {} -y ar {} -hide_banner -loglevel panic -ac 1 -filter:a atempo={} -vn temp.wav".format(fpath, hp.sr, tempo)
     #     os.system(cmd)
     #     y, sr = librosa.load('temp.wav', sr=hp.sr)
-
+    '''
     # Loading sound file
     y, sr = librosa.load(fpath, sr=hp.sr)
 
@@ -96,12 +97,16 @@ def get_spectrograms(fpath):
     # Transpose
     mel = mel.T.astype(np.float32)  # (T, n_mels)
     mag = mag.T.astype(np.float32)  # (T, 1+n_fft//2)
-
+    '''
+    y = load_wav(fpath)
+    mag = spectrogram(y).T.astype(np.float32)  # (T, n_mels)
+    mel = melspectrogram(y).T.astype(np.float32)  # (T, 1+n_fft//2)
     return mel, mag
 
 
 def spectrogram2wav(mag):
     '''# Generate wave file from spectrogram'''
+    return inv_spectrogram(mag.T)
     # transpose
     mag = mag.T
 

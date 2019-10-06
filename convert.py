@@ -7,7 +7,9 @@ from utils import Hps
 from solver import Solver
 from scipy.io import wavfile
 from torch.autograd import Variable
+from preprocess.tacotron.audio import save_wav
 from preprocess.tacotron.norm_utils import spectrogram2wav
+
 
 def sp2wav(sp): 
 	exp_sp = sp
@@ -45,13 +47,14 @@ def convert_all_sp(h5_path, src_speaker, tar_speaker, solver, dir_path,
 			converted_sp = convert_sp(sp, speaker2id[tar_speaker], solver, gen=gen)
 			wav_data = sp2wav(converted_sp)
 			wav_path = os.path.join(dir_path, f'{src_speaker}_{tar_speaker}_{utt_id}.wav')
-			wavfile.write(wav_path, 16000, wav_data)
+			#wavfile.write(wav_path, 16000, wav_data)
+			save_wav(wav_data, wav_path)
 			c += 1
 			if c >= max_n:
 				break
 
 if __name__ == '__main__':
-	h5_path = './vctk_test.h5'
+	h5_path = './vctk.h5'
 	root_dir = './results'
 	model_path = './pkl/model.pkl'
 	hps_path = './hps/vctk.json'

@@ -282,7 +282,7 @@ class LatentDiscriminator(nn.Module):
         return mean_value
 
 class CBHG(nn.Module):
-    def __init__(self, c_in=80, c_out=513):
+    def __init__(self, c_in=80, c_out=1025):
         super(CBHG, self).__init__()
         self.conv1s = nn.ModuleList(
                 [nn.Conv1d(c_in, 128, kernel_size=k) for k in range(1, 9)]
@@ -326,7 +326,7 @@ class CBHG(nn.Module):
         return out
 
 class Decoder(nn.Module):
-    def __init__(self, c_in=512, c_out=513, c_h=512, c_a=8, emb_size=128, ns=0.2):
+    def __init__(self, c_in=512, c_out=1025, c_h=512, c_a=8, emb_size=128, ns=0.2):
         super(Decoder, self).__init__()
         self.ns = ns
         self.conv1 = nn.Conv1d(c_in, 2*c_h, kernel_size=3)
@@ -403,7 +403,7 @@ class Decoder(nn.Module):
         return out
 
 class Encoder(nn.Module):
-    def __init__(self, c_in=513, c_h1=128, c_h2=512, c_h3=128, ns=0.2, dp=0.5):
+    def __init__(self, c_in=1025, c_h1=128, c_h2=512, c_h3=128, ns=0.2, dp=0.5):
         super(Encoder, self).__init__()
         self.ns = ns
         self.conv1s = nn.ModuleList(
@@ -488,7 +488,7 @@ if __name__ == '__main__':
     P = PatchDiscriminator().cuda()
     S = SpeakerClassifier().cuda()
     #cbhg = CBHG().cuda()
-    inp = Variable(torch.randn(16, 513, 128)).cuda()
+    inp = Variable(torch.randn(16, 1025, 128)).cuda()
     e1 = E1(inp)
     print(e1.size())
     s1 = S(e1)
