@@ -1,4 +1,4 @@
-# Voice-Conversion-PyTorch
+# Voice-Conversion
 This work is organized from [here](https://github.com/jjery2243542/voice_conversion).
 
 ## Colab Demo
