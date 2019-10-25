@@ -43,6 +43,11 @@ def melspectrogram(y):
 	S = _amp_to_db(_linear_to_mel(np.abs(D))) - hps.ref_level_db
 	return _normalize(S)
 
+def spec2mel(spec):
+	D = _db_to_amp(_denormalize(spec) + hps.ref_level_db)
+	S = _amp_to_db(_linear_to_mel(np.abs(D))) - hps.ref_level_db
+	return _normalize(S)
+
 
 def inv_melspectrogram(spectrogram):
 	mel = _db_to_amp(_denormalize(spectrogram) + hps.ref_level_db)
