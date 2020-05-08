@@ -9,14 +9,16 @@ class hparams:
 	################################
 	num_mels = 80
 	num_freq = 1025
-	sample_rate = 16000
-	frame_length_ms = 50
-	frame_shift_ms = 12.5
+	sample_rate = 22050
+	frame_length = 800
+	frame_shift = 200
 	preemphasis = 0.97
 	min_level_db = -100
 	ref_level_db = 20
 	power = 1.5
 	gl_iters = 100
+	seg_l = 16000
+	seed = 0
 
 	################################
 	# Model Parameters             #

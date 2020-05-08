@@ -6,12 +6,18 @@ from scipy.io import wavfile
 import sys
 sys.path.append('preprocess')
 from tacotron.hparams import hparams as hps
+np.random.seed(hps.seed)
 
 
 def load_wav(path):
-	y, _ = librosa.load(path, sr = hps.sample_rate)
-	y = y/np.max(np.abs(y))
-	return y
+	sr, wav = wavfile.read(path)
+	wav = wav.astype(np.float32)
+	wav = wav/np.max(np.abs(wav))
+	try:
+		assert sr == hps.sample_rate
+	except:
+		wav = librosa.core.resample(wav, sr, hps.sample_rate)
+	return wav
 
 
 def save_wav(wav, path):
@@ -47,7 +53,6 @@ def spec2mel(spec):
 	D = _db_to_amp(_denormalize(spec) + hps.ref_level_db)
 	S = _amp_to_db(_linear_to_mel(np.abs(D))) - hps.ref_level_db
 	return _normalize(S)
-
 
 def inv_melspectrogram(spectrogram):
 	mel = _db_to_amp(_denormalize(spectrogram) + hps.ref_level_db)
@@ -89,10 +94,7 @@ def _istft(y):
 
 
 def _stft_parameters():
-	n_fft = (hps.num_freq - 1) * 2
-	hop_length = int(hps.frame_shift_ms / 1000 * hps.sample_rate)
-	win_length = int(hps.frame_length_ms / 1000 * hps.sample_rate)
-	return n_fft, hop_length, win_length
+	return (hps.num_freq - 1) * 2, hps.frame_shift, hps.frame_length
 
 
 # Conversions:
@@ -120,15 +122,18 @@ def _build_mel_basis():
 	n_fft = (hps.num_freq - 1) * 2
 	return librosa.filters.mel(hps.sample_rate, n_fft, n_mels=hps.num_mels)
 
+
 def _amp_to_db(x):
 	return 20 * np.log10(np.maximum(1e-5, x))
+
 
 def _db_to_amp(x):
 	return np.power(10.0, x * 0.05)
 
+
 def _normalize(S):
 	return np.clip((S - hps.min_level_db) / -hps.min_level_db, 0, 1)
 
+
 def _denormalize(S):
 	return (np.clip(S, 0, 1) * -hps.min_level_db) + hps.min_level_db
-

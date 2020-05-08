@@ -215,6 +215,7 @@ class Sampler(object):
     def sample_utt(self, speaker_id, n_samples=1):
         # sample an utterence
         dset = self.dset
+        if not len(self.speaker2utts[speaker_id]) >= 1: print(speaker_id)
         utt_ids = random.sample(self.speaker2utts[speaker_id], n_samples)
         lengths = [self.f_h5[f'{dset}/{speaker_id}/{utt_id}/lin'].shape[0] for utt_id in utt_ids]
         return [(utt_id, length) for utt_id, length in zip(utt_ids, lengths)]
@@ -226,8 +227,10 @@ class Sampler(object):
     def sample_single(self):
         seg_len = self.seg_len
         max_step = self.max_step
+
         speaker_idx, = random.sample(range(len(self.speaker_used)), 1)
         speaker = self.speaker_used[speaker_idx]
+        
         (utt_id, utt_len), = self.sample_utt(speaker, 1)
         t = random.randint(0, utt_len - seg_len)  
         index_tuple = self.single_indexer(speaker=speaker_idx, i=f'{speaker}/{utt_id}', t=t)

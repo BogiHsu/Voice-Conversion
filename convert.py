@@ -41,6 +41,7 @@ def convert_all_sp(h5_path, src_speaker, tar_speaker, solver, dir_path,
 	# read speaker id file
 	with open(speaker_used_path) as f:
 		speakers = [line.strip() for line in f]
+		speakers = sorted(speakers)
 		speaker2id = {speaker:i for i, speaker in enumerate(speakers)}
 
 	with h5py.File(h5_path, 'r') as f_h5:
